@@ -8,13 +8,21 @@ struct User
     char name[50];
     float balance;
     char password[5];
-    float arr[500];
+};
+struct Stock
+{
+    const char *name;
+    const char *symbol;
+    float current_price;
+    float past_price;
+    float deviation;
+    int user_holding;
 };
 
 void main()
 {
+    //User initialization 
     struct User *User_ptr, user1;
-    //Add Intro Part
     User_ptr = &user1;
     printf("Enter your Username: ");
     fgets(User_ptr->name,sizeof(User_ptr->name),stdin);
@@ -39,4 +47,19 @@ void main()
     printf("Enter the amount you wish to Deposit in your trading account: ");
     scanf("%f",&User_ptr->balance);
     printf("Your balance is %.2f",User_ptr->balance);
+
+    //Initializing Stocks
+    struct Stock stocks[20];
+    stocks[0].name = "APPLE";
+    stocks[0].symbol = "APL";
+    stocks[0].current_price = 255.25;
+    stocks[0].user_holding = 0;
+    printf("\n Name \t Symbol \t Stock Price \t Deviation");
+    printf("\n %s \t %s \t\t %.2f \t (+2.39%)",stocks[0].name,stocks[0].symbol,stocks[0].current_price);
+
+    stocks[1].name = "MICROSOFT";
+    stocks[1].symbol = "MSFT";
+    stocks[1].current_price = 123.48;
+    stocks[1].user_holding = 1;
+    //Displaying Stocks
 }
