@@ -19,11 +19,27 @@ struct Stock
     int user_holding;
 };
 void Initilize_Stocks(struct Stock stocks[20]);
+void Initilize_User(struct User *User_ptr);
 void main()
 {
     //User initialization 
     struct User *User_ptr, user1;
     User_ptr = &user1;
+    Initilize_User(User_ptr);
+
+    //Initializing Stocks
+    
+    struct Stock stocks[20];
+    Initilize_Stocks(stocks);
+
+
+    //Displaying Stocks
+    /*
+    printf("\n Name \t Symbol \t Stock Price \t Deviation");
+    printf("\n %s \t %s \t\t %.2f \t (+2.39)",stocks[0].name,stocks[0].symbol,stocks[0].current_price);*/
+}
+void Initilize_User(struct User *User_ptr)
+{
     printf("Enter your Username: ");
     fgets(User_ptr->name,sizeof(User_ptr->name),stdin);
     printf("Welcome to the Stock Market, ");
@@ -47,15 +63,8 @@ void main()
     printf("Enter the amount you wish to Deposit in your trading account: ");
     scanf("%f",&User_ptr->balance);
     printf("Your balance is %.2f",User_ptr->balance);
-
-    //Initializing Stocks
-    struct Stock stocks[20];
-    Initilize_Stocks(stocks);
-    //Displaying Stocks
-    /*
-    printf("\n Name \t Symbol \t Stock Price \t Deviation");
-    printf("\n %s \t %s \t\t %.2f \t (+2.39)",stocks[0].name,stocks[0].symbol,stocks[0].current_price);*/
 }
+
 
 void Initilize_Stocks(struct Stock stocks[20])
 {
