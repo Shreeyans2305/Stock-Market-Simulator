@@ -25,6 +25,7 @@ struct Stock
 int simulated = 0;
 
 void Initilize_Stocks(struct Stock stocks[20]);
+void Initilize_Stocks_2(struct Stock stocks[20]);
 void Initilize_User(struct User *User_ptr);
 void Display(struct Stock stocks[20]);
 void Display_2(struct Stock stocks[20]);
@@ -219,7 +220,7 @@ void Portfolio(struct Stock stocks[20], struct User *User_ptr)
     }
 }
     User_ptr->current_holding = hold;
-    printf("Current Holding: %.2f \n", User_ptr->current_holding);
+    printf("\nCurrent Holding: %.2f \n", User_ptr->current_holding);
     printf("Available Balance: %.2f \n", User_ptr->balance);
 
 }
@@ -340,7 +341,7 @@ void Simulate(struct Stock stocks[20])
     int n_days;
     int loss_percentage;
     int profit_percentage;
-    int profit_or_loss;
+
     printf("For how many days would you like to simulate the stock market: ");
     scanf("%d", &n_days);
 
@@ -351,16 +352,18 @@ void Simulate(struct Stock stocks[20])
         fflush(stdout);
         usleep(100000); // Adjust delay
     }
-    Initilize_Stocks(stocks);
+    Initilize_Stocks_2(stocks);
+    srand(time(0));
     for (int j = 0; j <= n_days; j++)
     {
-        srand(time(0));
-        profit_or_loss = rand() % 2;
         for (int k = 0; k <= 19; k++)
         {
+            stocks[k].past_price = stocks[k].current_price;
+            int profit_or_loss = rand() % 2;
             if (profit_or_loss == 0)
             {
                 loss_percentage = (rand() % 3) + 5;
+                //stocks[k].deviation = 0;
                 stocks[k].current_price = stocks[k].current_price - (stocks[k].past_price * loss_percentage / 100);
 
             }
@@ -368,6 +371,7 @@ void Simulate(struct Stock stocks[20])
             else
             {
                 profit_percentage = (rand() % 3) + 5;
+                //stocks[k].deviation = 0;
                 stocks[k].current_price = stocks[k].current_price + (stocks[k].past_price * profit_percentage / 100);
             }
 
@@ -567,6 +571,71 @@ void Initilize_Stocks(struct Stock stocks[20])
     stocks[19].current_price = 1312.05;
     stocks[19].past_price = 1312.05;
     stocks[19].user_holding = 0;
+
+    printf("\nStocks Initialized Sucessfully\n");
+}
+
+void Initilize_Stocks_2(struct Stock stocks[20])
+{
+    stocks[0].name = "APPLE               ";
+    stocks[0].symbol = "AAPL";
+
+    stocks[1].name = "MICROSOFT           ";
+    stocks[1].symbol = "MSFT";
+
+    stocks[2].name = "NVIDIA              ";
+    stocks[2].symbol = "NVDA";
+
+    stocks[3].name = "AMAZON              ";
+    stocks[3].symbol = "AMZN";
+
+    stocks[4].name = "BERKSHIRE HATHWAY   ";
+    stocks[4].symbol = "BRK-B";
+
+    stocks[5].name = "ALPHABET            ";
+    stocks[5].symbol = "GOOG";
+
+    stocks[6].name = "META                ";
+    stocks[6].symbol = "META";
+
+    stocks[7].name = "TESLA               ";
+    stocks[7].symbol = "TSLA";
+
+    stocks[8].name = "TOYOTA              ";
+    stocks[8].symbol = "TM";
+
+    stocks[9].name = "VISA                ";
+    stocks[9].symbol = "V";
+
+    stocks[10].name = "TATA STEEL          ";
+    stocks[10].symbol = "TTSL";
+
+    stocks[11].name = "CANARA BANK         ";
+    stocks[11].symbol = "CANBK";
+
+    stocks[12].name = "INFOSYS             ";
+    stocks[12].symbol = "INFY";
+
+    stocks[13].name = "RELIANCE INDUSTRIES ";
+    stocks[13].symbol = "REL";
+
+    stocks[14].name = "TATA MOTORS         ";
+    stocks[14].symbol = "TTMR";
+
+    stocks[15].name = "HDFC BANK           ";
+    stocks[15].symbol = "HDFC";
+
+    stocks[16].name = "BHARAT ELECTRONICS  ";
+    stocks[16].symbol = "BEL";
+
+    stocks[17].name = "STATE BANK OF INDIA ";
+    stocks[17].symbol = "SBI";
+
+    stocks[18].name = "PUNJAB NATIONAL BANK";
+    stocks[18].symbol = "PNB";
+
+    stocks[19].name = "ICICI BANK          ";
+    stocks[19].symbol = "ICICI";
 
     printf("\nStocks Initialized Sucessfully\n");
 }
