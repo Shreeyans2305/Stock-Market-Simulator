@@ -11,6 +11,7 @@ struct User
     char password[5];
     float current_holding;
     float previous_holding;
+    int age;
 };
 struct Stock
 {
@@ -90,10 +91,12 @@ void main()
         }
         else if (strcmp(command, "/v") == 0)
         {
-            if (simulated == 0){
-            Display(stocks);
+            if (simulated == 0)
+            {
+                Display(stocks);
             }
-            else{
+            else
+            {
                 Display_2(stocks);
             }
         }
@@ -115,13 +118,11 @@ void main()
         {
             printf("\n Invalid Command");
         }
-
-        printf("Enter your age: ");
-        int age;
-        scanf("%d", &age);
-    }
+        /*printf("Enter your age: ");
+        scanf("%d",&User_ptr->age);
+        printf("\n");*/
 }
-
+}
 // User Initilaization Function
 void Initilize_User(struct User *User_ptr)
 {
@@ -129,7 +130,7 @@ void Initilize_User(struct User *User_ptr)
     fgets(User_ptr->name, sizeof(User_ptr->name), stdin);
     printf("Welcome to the Stock Market, ");
     puts(User_ptr->name);
-
+    
 check:
     printf("Set a 4-digit pin: ");
     fgets(User_ptr->password, sizeof(User_ptr->password), stdin);
@@ -156,20 +157,19 @@ check:
 // Stocks Displaying Function
 void Display(struct Stock stocks[20])
 {
-        printf("\n Name \t\t\t\tSymbol \t \t\t Current Stock Price \t\t Deviation");
-        for (int i = 0; i <= 19; i++)
+    printf("\n Name \t\t\t\tSymbol \t \t Current Stock Price");
+    for (int i = 0; i <= 19; i++)
+    {
+        if (i == 11 || i == 18)
         {
-            if (i == 11 || i == 18)
-            {
-                printf("\n %s   \t%s \t\t %.2f", stocks[i].name, stocks[i].symbol, stocks[i].current_price);
-                printf("\n");
-                continue;
-            }
             printf("\n %s   \t%s \t\t %.2f", stocks[i].name, stocks[i].symbol, stocks[i].current_price);
             printf("\n");
-
+            continue;
+        }
+        printf("\n %s   \t%s \t\t %.2f", stocks[i].name, stocks[i].symbol, stocks[i].current_price);
+        printf("\n");
     }
-    printf("Note: The value of the stocks won't change untill you simulate the stock market at least once!");
+    printf("Note: The value of the stocks won't change untill you simulate the stock market at least once!\n");
 }
 
 void Display_2(struct Stock stocks[20])
@@ -181,13 +181,13 @@ void Display_2(struct Stock stocks[20])
         if (i == 11 || i == 18 || i == 2 || i == 10 || i == 14 || i == 16 || i == 17)
         {
             dev = stocks[i].current_price - stocks[i].past_price;
-            printf("\n %s   \t%s \t\t %.2f  \t --> \t %.2f    \t %.2f", stocks[i].name, stocks[i].symbol, stocks[i].past_price, stocks[i].current_price,dev);
+            printf("\n %s   \t%s \t\t %.2f  \t --> \t %.2f    \t %.2f", stocks[i].name, stocks[i].symbol, stocks[i].past_price, stocks[i].current_price, dev);
             printf("\n");
             continue;
         }
         printf("\n");
         dev = stocks[i].current_price - stocks[i].past_price;
-        printf("\n %s   \t%s \t\t %.2f\t --> \t %.2f \t %.2f\n", stocks[i].name, stocks[i].symbol, stocks[i].past_price, stocks[i].current_price,dev);
+        printf("\n %s   \t%s \t\t %.2f\t --> \t %.2f \t %.2f\n", stocks[i].name, stocks[i].symbol, stocks[i].past_price, stocks[i].current_price, dev);
     }
 }
 // Portfolio Displaying Function
@@ -207,22 +207,21 @@ void Portfolio(struct Stock stocks[20], struct User *User_ptr)
             if (i == 11 || i == 18 || i == 2 || i == 10 || i == 14 || i == 16 || i == 17)
             {
                 dev = stocks[i].current_price - stocks[i].past_price;
-                printf("\n %s   \t%s \t\t %.2f  \t --> \t %.2f    \t %.2f  \t %d", stocks[i].name, stocks[i].symbol, stocks[i].past_price, stocks[i].current_price,dev,stocks[i].user_holding);
-                hold = hold+(stocks[i].user_holding*stocks[i].current_price);
+                printf("\n %s   \t%s \t\t %.2f  \t --> \t %.2f    \t %.2f  \t %d", stocks[i].name, stocks[i].symbol, stocks[i].past_price, stocks[i].current_price, dev, stocks[i].user_holding);
+                hold = hold + (stocks[i].user_holding * stocks[i].current_price);
                 printf("\n");
                 continue;
             }
             printf("\n");
             dev = stocks[i].current_price - stocks[i].past_price;
-            printf("\n %s   \t%s \t\t %.2f\t --> \t %.2f \t %.2f  \t %d", stocks[i].name, stocks[i].symbol, stocks[i].past_price, stocks[i].current_price,dev,stocks[i].user_holding);
-            hold = hold+(stocks[i].user_holding*stocks[i].current_price);
+            printf("\n %s   \t%s \t\t %.2f\t --> \t %.2f \t %.2f  \t %d", stocks[i].name, stocks[i].symbol, stocks[i].past_price, stocks[i].current_price, dev, stocks[i].user_holding);
+            hold = hold + (stocks[i].user_holding * stocks[i].current_price);
             printf("\n");
+        }
     }
-}
     User_ptr->current_holding = hold;
     printf("\nCurrent Holding: %.2f \n", User_ptr->current_holding);
     printf("Available Balance: %.2f \n", User_ptr->balance);
-
 }
 // Stocks Buying Function
 void Buy(struct Stock stocks[20], struct User *User_ptr)
@@ -363,18 +362,16 @@ void Simulate(struct Stock stocks[20])
             if (profit_or_loss == 0)
             {
                 loss_percentage = (rand() % 3) + 5;
-                //stocks[k].deviation = 0;
+                // stocks[k].deviation = 0;
                 stocks[k].current_price = stocks[k].current_price - (stocks[k].past_price * loss_percentage / 100);
-
             }
-            
+
             else
             {
                 profit_percentage = (rand() % 3) + 5;
-                //stocks[k].deviation = 0;
+                // stocks[k].deviation = 0;
                 stocks[k].current_price = stocks[k].current_price + (stocks[k].past_price * profit_percentage / 100);
             }
-
         }
     }
     printf("] Done!\n");
