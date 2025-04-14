@@ -57,7 +57,7 @@ void main()
     while (user_active == 1)
     {
     simul_check:
-        printf("Main Menu: \n");
+        printf("\nMain Menu: \n");
         printf("Here is a list of commands: \n");
         printf("To view your Portfolio, type /p \n");
         printf("To Buy Stocks, type /b \n");
@@ -569,7 +569,6 @@ void Initilize_Stocks(struct Stock stocks[20])
     stocks[19].past_price = 1312.05;
     stocks[19].user_holding = 0;
 
-    printf("\nStocks Initialized Sucessfully\n");
 }
 
 void Initilize_Stocks_2(struct Stock stocks[20])
@@ -634,5 +633,4 @@ void Initilize_Stocks_2(struct Stock stocks[20])
     stocks[19].name = "ICICI BANK          ";
     stocks[19].symbol = "ICICI";
 
-    printf("\nStocks Initialized Sucessfully\n");
 }
