@@ -374,7 +374,7 @@ void Simulate(struct Stock stocks[20])
             }
         }
     }
-    printf("] Done!\n");
+    printf("] Done!\n\a");
     simulated = 1;
 }
 // Withdraw Funds Function
